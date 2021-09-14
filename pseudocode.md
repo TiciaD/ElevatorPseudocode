@@ -29,10 +29,7 @@
 
 ## Pseudocode
 
-**Scenario**: Pseudocode for an elevator to service 10 floors
-
 ### 1: Define Objects and Functions
-
 * Elevator  
     * elevatorUp  --> currentFloor++
     * elevatorDown  --> currentFloor--
@@ -60,6 +57,7 @@
 
 
 ### 2: Brief Overview Example
+**Scenario**: Pseudocode for an elevator to service 10 floors
 ```
 START
 
