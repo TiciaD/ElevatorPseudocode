@@ -34,38 +34,56 @@
 ### 1: Define Objects and Functions
 
 * Elevator  
-    * elevatorUp  
-    * elevatorDown  
-    * elevatorStop
-    * floor
+    * elevatorUp  --> currentFloor++
+    * elevatorDown  --> currentFloor--
+    * elevatorStop  --> currentFloor === onPress() OR currentFloor === passengerFloor()
+    * currentFloor  --> READ which floor the elevator is currently on
 
 * Doors
-    * doorOpen
-    * doorClose
+    * doorOpen --> currentFloor === onPress OR currentFloor === passengerFloor()
+    * doorClose  --> elevatorUp = true OR elevatorDown = true
     * INIT doorAtDestination()  --> elevatorStop and doorOpen and stays open for predetermined time
 
 * Button Panels
-    * INIT currentFloor()  --> READ which floor the elevator is currently on
-    * INIT onPress()  --> button tells elevator what floor number was pressed
+    * INIT onPress()  --> button tells elevator what floor number was pressed and adds to array
+        * button1 = 1, button2 = 2, etc.
     * INIT floorQueue  --> array for floors selected
     * INIT emerStop()  --> emergency stop, overrides all commands and implements elevatorStop and doorClose  
  
     - INIT passengerCall() --> tells elevator if floor called is up or down
-    - INIT passengerFloor() --> tells elevator what floor passenger called it to 
+    - INIT passengerFloor() --> tells elevator what floor passenger called it to and adds floor number to array
 
 * Display
     * isButtonSelected  --> true or false
     * buttonOn --> Turns button light on if isButtonSelected(true)
-    * INIT floorDisplay()  --> DISPLAY currentFloor() as elevator passes it or stops at it
+    * INIT floorDisplay()  --> DISPLAY currentFloor as elevator passes it or stops at it
 
 
 ### 2: Brief Overview Example
 ```
 START
 
-passengerCall(up) or passengerCall(down)
+Elevator.currentFloor(10)
+ButtonPanels.passengerFloor(Floor1)
+ButtonPanels.passengerCall(down)
+Elevator.elevatorDown
+Doors.doorAtDestination(doorOpen)
 
-READ passengerFloor(Floor1)  
+Display.floorDisplay(currentFloor)
+ButtonPanels.onPress(Floor6)
+Display.isButtonSelected(buttonOn)
+Elevator.elevatorUp
+Doors.doorAtDestination(doorOpen)
+
+END
+```
+
+### 3. Pseudocode Objects and Functions
+```
+START
+
+// Function for elevator to travel from current floor to floor it's been called to
+
 IF currentFloor != passengerFloor
     THEN 
         WHILE currentFloor > passengerFloor
@@ -78,14 +96,8 @@ IF currentFloor != passengerFloor
 ELSE doorAtDestination()
 
 
-onPress(Floor6)
 
-IF isButtonSelected(true)  
-    buttonOn
-END IF 
-
-floorDisplay()
-
+// Function for elevator to travel to floor selected on inside button panel
 
 IF onPress() != currentFloor()
     THEN 
@@ -97,6 +109,10 @@ IF onPress() != currentFloor()
             break        
         END WHILE        
 ELSE doorAtDestination()                
+
+
+
+// Function for elevator to make stops along way if it receives new calls while it's heading in the same directiion and the new calls are between its current floor and its destination
 
 IF passengerCall(up)
     THEN 
@@ -116,3 +132,21 @@ ELSE IF passengerCall(down)
                     break
                 END WHILE
         ELSE doorAtDestination()
+
+
+
+// Turn button light on function
+
+IF isButtonSelected() == true  
+    buttonOn
+END IF 
+
+
+
+// Function for emergency stop
+
+
+
+
+END
+```
