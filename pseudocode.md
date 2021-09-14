@@ -37,11 +37,12 @@
     * elevatorUp  
     * elevatorDown  
     * elevatorStop
+    * floor
 
 * Doors
     * doorOpen
     * doorClose
-    * INIT doorAtDestination()  --> door stays open for predetermined time
+    * INIT doorAtDestination()  --> elevatorStop and doorOpen and stays open for predetermined time
 
 * Button Panels
     * INIT currentFloor()  --> READ which floor the elevator is currently on
@@ -65,14 +66,53 @@ START
 passengerCall(up) or passengerCall(down)
 
 READ passengerFloor(Floor1)  
-if currentFloor != passengerFloor 
-doorAtDestination(open)
+IF currentFloor != passengerFloor
+    THEN 
+        WHILE currentFloor > passengerFloor
+            elevatorDown
+            break
+        WHILE currentfloor < passengerFloor
+            elevatorUp
+            break
+        END WHILE
+ELSE doorAtDestination()
 
 
 onPress(Floor6)
+
 IF isButtonSelected(true)  
     buttonOn
 END IF 
 
+floorDisplay()
 
 
+IF onPress() != currentFloor()
+    THEN 
+        WHILE currentFloor() > onPress()
+            elevatorDown
+            break        
+        WHILE currentfloor() < onPress()
+            elevatorUp
+            break        
+        END WHILE        
+ELSE doorAtDestination()                
+
+IF passengerCall(up)
+    THEN 
+        IF elevatorUp === true AND (currentFloor <= passengerFloor <= onPress)
+            THEN
+                WHILE currentfloor() < passengerFloor()
+                    elevatorUp
+                    break
+                END WHILE
+        ELSE doorAtDestination()
+ELSE IF passengerCall(down)
+    THEN 
+        IF elevatorDown === true AND (currentFloor >= passengerFloor >= onPress)
+            THEN
+                WHILE currentfloor() > passengerFloor()
+                    elevatorDown
+                    break
+                END WHILE
+        ELSE doorAtDestination()
