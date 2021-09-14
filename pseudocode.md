@@ -112,7 +112,9 @@ ELSE doorAtDestination()
 
 
 
-// Function for elevator to make stops along way if it receives new calls while it's heading in the same directiion and the new calls are between its current floor and its destination
+// Function for elevator to make stops along the way if it receives new 
+calls while it's heading in the same directiion and the new calls are 
+between its current floor and its destination
 
 IF passengerCall(up)
     THEN 
@@ -143,8 +145,12 @@ END IF
 
 
 
-// Function for emergency stop
+// Function for emergency stop, needs to override all other functions
 
+IF isButtonSelected() == true
+    alert
+    doorClose AND elevatorStop
+END IF
 
 
 
