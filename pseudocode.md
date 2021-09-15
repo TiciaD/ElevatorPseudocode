@@ -137,15 +137,18 @@ ELSE IF passengerCall(down)
 
 // Turn button light on function
 
-IF isButtonSelected() == true  
-    buttonOn
-END IF 
+IF onPress() == true
+    THEN
+        IF isButtonSelected == true  
+            buttonOn
+        END IF
+ELSE buttonOn == false
 
 
 
 // Function for emergency stop, needs to override all other functions
 
-IF isButtonSelected() == true
+IF isButtonSelected == true
     alert
     doorClose AND elevatorStop
 END IF
